@@ -13,7 +13,5 @@
     "cve",
     "vulnerability-management",
     "exploit"
-  ],
-  "agents": "./agents",
-  "skills": "./skills"
+  ]
 }

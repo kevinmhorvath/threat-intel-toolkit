@@ -1,0 +1,66 @@
+name: Feed request / problem
+description: Suggest a new threat-intel feed, or report one that's dead, changed, or should be removed.
+title: "[feed] "
+labels: ["feed"]
+body:
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What is this?
+      options:
+        - New feed suggestion
+        - Existing feed is dead / unreachable
+        - Existing feed changed format (parses to 0 or wrong records)
+        - Feed should be removed (license / quality concern)
+    validations:
+      required: true
+
+  - type: input
+    id: url
+    attributes:
+      label: Feed URL
+      description: The raw feed URL (the thing the toolkit would fetch).
+      placeholder: https://example.com/badips.txt
+    validations:
+      required: true
+
+  - type: dropdown
+    id: ioc_type
+    attributes:
+      label: Primary IOC type
+      options:
+        - IP
+        - CIDR range
+        - domain
+        - URL
+        - CVE
+    validations:
+      required: true
+
+  - type: input
+    id: license
+    attributes:
+      label: License / terms
+      description: >-
+        Link the feed's license or terms page. Feeds must permit free defensive use and be
+        fetchable anonymously (no API key) to ship in the default set.
+      placeholder: "e.g. MIT — https://github.com/owner/repo/blob/main/LICENSE"
+    validations:
+      required: true
+
+  - type: textarea
+    id: value
+    attributes:
+      label: What does it add?
+      description: What this feed covers that the existing 10 feeds don't, and roughly how many indicators / how often it updates.
+    validations:
+      required: false
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Confirmations
+      options:
+        - label: This feed can be fetched anonymously (no API key or registration).
+        - label: Its license permits free defensive use (or I've flagged the concern above).
+        - label: I understand the toolkit references feed URLs at runtime and does not re-host feed data.

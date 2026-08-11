@@ -1,0 +1,50 @@
+name: Feed health check
+
+# Smoke-tests every source both skills rely on, weekly (and on demand). Fails if any feed
+# or source is unreachable, returns no data, or no longer parses — so dead URLs or upstream
+# format changes surface as a failed run / notification before they reach users.
+
+on:
+  schedule:
+    - cron: "0 14 * * 1"   # every Monday 14:00 UTC
+  workflow_dispatch: {}      # allow manual runs from the Actions tab
+  push:
+    paths:
+      - "skills/**/scripts/**"
+      - ".github/workflows/feed-healthcheck.yml"
+
+jobs:
+  healthcheck:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # ---- threat-intel-lookup (indicator feeds) ----
+      - name: threat-intel-lookup — feed smoke test
+        working-directory: skills/threat-intel-lookup/scripts
+        run: python3 healthcheck.py
+
+      - name: threat-intel-lookup — end-to-end (aggregate + lookup)
+        working-directory: skills/threat-intel-lookup/scripts
+        run: |
+          python3 ti.py aggregate
+          # CVE-2021-44228 (Log4Shell) is on CISA KEV and should always resolve as EXPLOITED
+          python3 ti.py lookup CVE-2021-44228 --json | python3 -c "import sys,json; r=json.load(sys.stdin); assert r[0]['verdict']=='EXPLOITED', r; print('end-to-end OK:', r[0]['verdict'])"
+
+      # ---- exploit-availability-check (CVE exploit maturity) ----
+      - name: exploit-availability-check — source smoke test
+        working-directory: skills/exploit-availability-check/scripts
+        run: python3 healthcheck.py
+
+      - name: exploit-availability-check — end-to-end (known CVE assessment)
+        working-directory: skills/exploit-availability-check/scripts
+        run: |
+          # Log4Shell should always come back weaponized (RED tier)
+          python3 exploit_check.py --json CVE-2021-44228 | python3 -c "import sys,json; r=json.load(sys.stdin); assert r[0]['tier'].startswith('RED'), r; print('end-to-end OK:', r[0]['tier'])"

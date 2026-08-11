@@ -1,0 +1,19 @@
+{
+  "name": "threat-intel-toolkit",
+  "version": "0.1.0",
+  "description": "Defensive IOC + vulnerability triage on free/open-source intel: a subagent plus two skills — threat-intel-lookup (aggregates 10 key-free feeds and looks up IPs, domains, URLs, CVEs) and exploit-availability-check (rates a CVE's exploit/PoC maturity via KEV, EPSS, Metasploit, Nuclei, Exploit-DB, and PoC aggregators). No API keys required.",
+  "license": "MIT",
+  "keywords": [
+    "threat-intelligence",
+    "ioc",
+    "cybersecurity",
+    "blocklist",
+    "cti",
+    "incident-response",
+    "cve",
+    "vulnerability-management",
+    "exploit"
+  ],
+  "agents": "./agents",
+  "skills": "./skills"
+}

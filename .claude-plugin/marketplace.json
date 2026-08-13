@@ -1,7 +1,7 @@
 {
   "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
   "name": "threat-intel-marketplace",
-  "version": "0.1.0",
+  "version": "1.1.0",
   "description": "A single-plugin marketplace hosting the Threat Intel Toolkit — defensive IOC triage on free, key-free open-source threat feeds.",
   "owner": {
     "name": "kevinmhorvath"
@@ -10,7 +10,7 @@
     {
       "name": "threat-intel-toolkit",
       "description": "Defensive IOC + vulnerability triage: a subagent plus two skills — threat-intel-lookup (aggregates 10 key-free feeds; looks up IPs, domains, URLs, CVEs) and exploit-availability-check (rates a CVE's exploit/PoC maturity). No API keys required.",
-      "version": "0.1.0",
+      "version": "1.1.0",
       "source": "./",
       "category": "security"
     }

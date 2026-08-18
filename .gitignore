@@ -5,3 +5,4 @@ __pycache__/
 *.db-wal
 *.db-shm
 deliverables/
+.DS_Store

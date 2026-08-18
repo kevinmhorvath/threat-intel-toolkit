@@ -7,3 +7,35 @@ __pycache__/
 deliverables/
 .DS_Store
 images/
+
+# === cowork-guardrails (managed) — do not edit between markers ===
+# Private marketing / demo assets — keep OUT of public repos.
+# (README images meant to be public: put them in assets/public/ or docs/img/)
+marketing/
+screenshots/
+images/
+deliverables/
+docs/private/
+_assets/
+_scratch/
+linkedin/
+*.draft.md
+
+# Secrets / credentials / env
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+service-account*.json
+secrets/
+
+# OS / editor / python noise
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+.python-version
+# === /cowork-guardrails ===
